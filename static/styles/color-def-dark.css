@@ -1,0 +1,40 @@
+:root {
+  /* overall default */
+  --doc-bg-color:  #505050;
+  --bg-color: #101010;
+  --text-color:white;
+
+  /* titles */
+  --title-color: white;
+  --title-bg-color: #101010;
+  --subtitle-color: white;
+  --subtitle-bg-color: #505050;
+
+  /* cards */
+  --card-text-color: white;
+  --card-bg-color: #101010;
+  --card-border: none;
+  --card-border-color: #808080;
+  --card-shadow: 0 0 2px rgba(255,255,255,.15);
+
+  /* buttons */
+  --btn-text-color: #101010;
+  --btn-bg-color: #e0e0e0;
+  --btn-border-color: white;
+  --btn-shadow: 2px 2px 6px rgb(0, 0, 0, 0.3);
+
+  --active-btn-bg-color: #e0e0e0;
+  --active-btn-border-color: white;
+  --active-btn-shadow: 2px 2px 6px rgb(0, 0, 0, 0.3);
+  
+  /* links */
+  --link-text-color: #c27f0b;
+  --link-decoration-color: #c27f0b;
+
+  /* Others */
+  --hairline-border: 0.5px solid gray;
+  --theme-color: #15983F;
+  --theme-dark-color: #f0f0f0;
+  --theme-light-color: black;
+  --caption-text-color: lightgray;
+}

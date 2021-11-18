@@ -1,0 +1,18 @@
+{
+  "presets": [
+    "@babel/typescript", [
+      "@babel/preset-env", {
+        "targets": {
+          "ie": 11
+        },
+        "useBuiltIns": "usage",
+        "corejs": 3
+      }
+    ]
+  ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread",
+      "@babel/plugin-proposal-class-properties",
+      ["@babel/plugin-transform-classes", { "loose": true }]
+    ]
+}

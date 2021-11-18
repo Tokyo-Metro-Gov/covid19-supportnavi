@@ -1,0 +1,47 @@
+{
+  "name": "list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "@types/copy-webpack-plugin": "^8.0.1",
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-dev-server": "^4.3.1",
+    "babel-polyfill": "^6.26.0",
+    "copy-webpack-plugin": "^6.4.1",
+    "core-js": "^3.19.1",
+    "css-loader": "^3.5.3",
+    "css-vars-ponyfill": "^2.4.7",
+    "extra-watch-webpack-plugin": "^1.0.3",
+    "jquery": "^3.6.0",
+    "style-loader": "^1.3.0",
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.9.10",
+    "webpack": "^5.62.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/ejs": "^3.1.0",
+    "@types/gtag.js": "0.0.3",
+    "@types/knockout": "^3.4.71",
+    "@types/papaparse": "^5.3.1",
+    "babel-loader": "^8.2.3",
+    "csv-parser": "^2.3.5",
+    "ejs-webpack-loader": "^2.2.2",
+    "html-webpack-plugin": "^4.5.2",
+    "strip-bom-stream": "^4.0.0"
+  },
+  "scripts": {
+    "build": "npx tsc --project tsconfig-for-webpack-config.json && webpack",
+    "start": "npx tsc --project tsconfig-for-webpack-config.json && webpack-dev-server",
+    "watch": "npx tsc --project tsconfig-for-webpack-config.json && webpack serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

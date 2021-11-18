@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+
+<head>
+  <!-- Google Analytics -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=**********"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', '**********');
+  </script>
+  -->
+  <title>
+    新型コロナウイルス感染症 支援情報ナビ
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" lang="ja" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- OGP情報 -->
+  <meta property="og:title" content="新型コロナウイルス感染症 支援情報ナビ" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="新型コロナウイルス感染症 支援情報ナビ">
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:description" content="新型コロナウイルス感染症の影響でお困りの企業や住民のみなさんが利用できる、自治体および一部の省庁の支援情報を探すことができるサイトです。" />
+  <!-- サイト設置時に正しいURLに書き換えてください
+  <meta property="og:url" content="https://example.com/" />
+  <meta property="og:image" content="https://example.com/images/site-banner.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://example.com/images/site-banner.png" />
+  <meta name="twitter:site" content="@********" />
+  -->
+  <meta data-path="." />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="./styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="./styles/answericons.css" type="text/css" />
+  <link rel="stylesheet" href="./styles/color-def-default.css" type="text/css" data-color-def="0" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+    integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/css-vars-ponyfill/2.3.2/css-vars-ponyfill.min.js"
+    integrity="sha512-M7N86CY7+3V84QPD44G9Gs18eSz3ig/LVHvrThICY46SGNwF2UQ4zj/pHf007o1F4vVa5AXkUXD7Ipdm+bzA/w=="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="overlay-wrapper">
+    <p id="overlay-message"></p>
+  </div>
+  <header class="mobile-header">
+    <button class="menu-btn flat-button">
+      <i class="fas fa-bars" aria-label="メニューを開きます"></i>
+    </button>
+    <div class="mobile-header-content">
+      <img src="./images/logo.png" />
+      <div class="header-title">新型コロナウイルス感染症<br />支援情報ナビ</div>
+    </div>
+  </header>
+  <div class="sidebar">
+    <div class="sidebar-background">
+      <div class="sidebar-ctrl">
+        <button class="flat-button menu-close-btn">
+          <i class="fas fa-times" aria-label="メニューを閉じます"></i>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <section class="sidebar-header">
+          <img src="./images/logo.png" alt="ロゴ" height="28px" />
+          <div>新型コロナウイルス感染症　支援情報ナビ</div>
+        </section>
+        <section>
+          <ul class="sidebar-navigation">
+            <li>
+              <i class="fas fa-home"></i>
+              <a href="#">トップページ</a>
+              <span>トップページ</span>
+            </li>
+            <li>
+              <i class="fas fa-compass"></i>
+              <a href="#navi">自分にあった制度を探す</a>
+              <span>自分にあった制度を探す</span>
+            </li>
+            <li>
+              <i class="fas fa-bookmark"></i>
+              <a href="#list">テーマ別に制度を見る</a>
+              <span>テーマ別に制度を見る</span>
+            </li>
+          </ul>
+        </section>
+        <hr />
+        <section class="accessibility">
+          <div class="sidebar-section-items">
+            <div class="accessibility-items">
+              <span class="accessibility-item-title">色合い：</span>
+              <div>
+                <button class="color-selector-btn color-palette default-color" data-css="color-def-default.css"
+                  aria-label="標準の色"><img data-css="color-def-default.css" src="./images/color-default.png"
+                    alt="標準の色" /></button>
+                <button class="color-selector-btn color-palette monotone" data-css="color-def-light.css"
+                  aria-label="明るいの色"><img data-css="color-def-light.css" src="./images/color-light.png"
+                    alt="明るい色" /></button>
+                <button class="color-selector-btn color-palette dark-color" data-css="color-def-dark.css"
+                  aria-label="暗いの色"><img data-css="color-def-dark.css" src="./images/color-dark.png"
+                    alt="暗い色" /></button>
+              </div>
+            </div>
+            <div class="accessibility-items">
+              <span class="accessibility-item-title">文字サイズ：</span>
+              <div>
+                <button class="increase-charsize-btn btn">大</button>
+                <button class="decrease-charsize-btn btn">小</button>
+                <button class="default-charsize-btn btn">標準</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <hr />
+        <section>
+          <ul class="sidebar-link">
+            <li><i class="fas fa-circle"></i><a href="#about"><span class="sidebar-menu-item">このサイトについて</span></a>
+            </li>
+            <li><i class="fas fa-circle"></i><a href="#privacy"><span class="sidebar-menu-item">プライバシーポリシー</span></a>
+            </li>
+            <li><i class="fas fa-circle"></i><a href="#contact"><span class="sidebar-menu-item">問い合わせ一覧</span></a>
+            </li>
+          </ul>
+        </section>
+        <hr />
+        <section>
+          <ul class="sidebar-link">
+            <li><i class="fas fa-circle"></i><a href="https://www.kantei.go.jp/jp/pages/coronavirus_index.html"
+                target="_blank"><span class="sidebar-menu-item">ご利用ください　お役立ち情報【首相官邸ホームページ】</span></a></li>
+          </ul>
+        </section>
+        <hr />
+        <section class="sidebar-banners">
+          <img class="site-banner" src="./images/site-banner.png" alt="サイトグラフィック" />
+        </section>
+        <!-- ソーシャルプラグインを利用する場合はここのコメントアウトを外して、aタグのhref属性を書き換えてください -->
+        <!-- 
+        <section class="sidebar-social">
+          <ul class="social-icon">
+            <li><a href="https://line.me/R/ti/p/********" target="_blank" rel="noopener noreferrer"><img
+                  src="./images/line.png" alt="LINE"></a></li>
+            <li><a href="https://twitter.com/********" target="_blank" rel="noopener noreferrer"><img
+                  src="./images/twitter.png" alt="Twitter"></a></li>
+            <li><a href="https://www.facebook.com/********" target="_blank" rel="noopener noreferrer"><img
+                  src="./images/facebook.png" alt="Facebook"></a></li>
+            <li><a href="https://www.youtube.com/user/********/videos" target="_blank" rel="noopener noreferrer"><img
+                  src="./images/youtube.png" alt="YouTube"></a></li>
+          </ul>
+        </section>
+        -->
+      </div>
+    </div>
+  </div>
+  <div id="main-content" class="main-content"></div>
+  <div class="caption" style="display:none">開発モード</div>
+  <div id="template" style="display:none;">
+    <!-- 
+      トップページ
+     -->
+    <div class="top-page">
+      <div class="top-title">
+        <div>
+          <div class="sub-title">必要な人に必要な情報を</div>
+          <h1>新型コロナウイルス感染症　支援情報ナビ</h1>
+        </div>
+        <div class="site-banner">
+          <img src="./images/site-banner.png" alt="サイトグラフィック" />
+        </div>
+      </div>
+      <!--
+      <p class="lastUpdatedDate">最終更新日時: 2020/XX/XX XX:XX</p>
+      -->
+
+      <div class="page-summary">
+        新型コロナウイルス感染症の影響でお困りの企業や住民のみなさんが利用できる、支援情報を探すことができるサイトです。
+      </div>
+      <div class="cardset">
+        <div class="card">
+          <a href="#navi" aria-label="わたしが使える支援が知りたい、という方はこちらにお進みください。">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                <defs>
+                  <style>
+                    .cls-11 {
+                      fill: #e7f7eb;
+                      opacity: 0;
+                    }
+
+                    .cls-12 {
+                      fill: #e7f7eb;
+                    }
+                  </style>
+                </defs>
+                <g id="レイヤー_12" data-name="レイヤー 12">
+                  <g id="レイヤー_11-2" data-name="レイヤー 11">
+                    <rect class="cls-11" width="200" height="200" />
+                    <path class="cls-12"
+                      d="M100,168.25a58.58,58.58,0,1,1,58.58-58.58A58.65,58.65,0,0,1,100,168.25Zm0-111.72a53.15,53.15,0,1,0,53.15,53.14A53.2,53.2,0,0,0,100,56.53Z" />
+                    <path class="cls-12"
+                      d="M100,55.1a11.68,11.68,0,1,1,11.67-11.68A11.69,11.69,0,0,1,100,55.1Zm0-17.92a6.25,6.25,0,1,0,6.25,6.24A6.25,6.25,0,0,0,100,37.18Z" />
+                    <path class="cls-12"
+                      d="M100,74.89a2.71,2.71,0,0,1-2.71-2.72V63.5a2.71,2.71,0,1,1,5.42,0v8.67A2.71,2.71,0,0,1,100,74.89Z" />
+                    <path class="cls-12" d="M62.5,112.39H53.83a2.72,2.72,0,1,1,0-5.43H62.5a2.72,2.72,0,1,1,0,5.43Z" />
+                    <path class="cls-12"
+                      d="M100,158.56a2.71,2.71,0,0,1-2.71-2.72v-8.67a2.71,2.71,0,0,1,5.42,0v8.67A2.71,2.71,0,0,1,100,158.56Z" />
+                    <path class="cls-12" d="M146.17,112.39H137.5a2.72,2.72,0,1,1,0-5.43h8.67a2.72,2.72,0,1,1,0,5.43Z" />
+                    <path class="cls-12"
+                      d="M79.24,151.06a2.65,2.65,0,0,1-1.28-.33,2.72,2.72,0,0,1-1.39-2.88l6.28-34A39,39,0,0,1,94,93.09l24.86-24a2.72,2.72,0,0,1,4.56,2.44l-6.28,34A38.94,38.94,0,0,1,106,126.26l-24.86,24A2.73,2.73,0,0,1,79.24,151.06Zm37.31-72.21L97.78,97h0a33.94,33.94,0,0,0-9.59,17.88L83.45,140.5l18.77-18.14a34,34,0,0,0,9.59-17.88ZM95.89,95h0Z" />
+                    <path class="cls-12"
+                      d="M110.93,118.22a2.75,2.75,0,0,1-1.27-.32L87.79,106.24a2.71,2.71,0,1,1,2.55-4.79l21.87,11.66a2.71,2.71,0,0,1-1.28,5.11Z" />
+                  </g>
+                </g>
+              </svg>
+              <div>
+                <div class="top-btn-label">自分にあった制度を探す</div>
+                <div class="top-btn-desc">
+                  <!--<p>わたしが使える支援が知りたい、という方はこちらにお進みください。</p>-->
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="#list" aria-label="すべての支援制度から選択したい、という方はこちらにお進みください。">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                <defs>
+                  <style>
+                    .cls-21 {
+                      opacity: 0;
+                    }
+
+                    .cls-22 {
+                      fill: #e7f7eb;
+                    }
+
+                    .cls-23 {
+                      fill: #e7f7eb;
+                    }
+                  </style>
+                </defs>
+                <g id="レイヤー_22" data-name="レイヤー 22">
+                  <g id="レイヤー_21-2" data-name="レイヤー 21">
+                    <g class="cls-21">
+                      <rect class="cls-22" width="200" height="200" />
+                    </g>
+                    <path class="cls-23"
+                      d="M131.32,89.66a2.72,2.72,0,0,1-1.5-.45l-14.16-9.44-14.15,9.44a2.74,2.74,0,0,1-2.79.13A2.71,2.71,0,0,1,97.29,87V75.85a2.71,2.71,0,0,1,5.42,0v6l11.45-7.63a2.7,2.7,0,0,1,3,0l11.44,7.63V42.68h-25.9V62.37a2.71,2.71,0,1,1-5.42,0V40A2.71,2.71,0,0,1,100,37.25h31.32A2.71,2.71,0,0,1,134,40V87a2.71,2.71,0,0,1-2.72,2.71Z" />
+                    <path class="cls-23"
+                      d="M141.46,162.75H58.54a8.1,8.1,0,0,1-8.24-7.93V55.62a8.1,8.1,0,0,1,8.24-7.93H100a2.72,2.72,0,1,1,0,5.43H58.54a2.67,2.67,0,0,0-2.81,2.5v99.2a2.67,2.67,0,0,0,2.81,2.5h82.92a2.67,2.67,0,0,0,2.81-2.5V55.62a2.67,2.67,0,0,0-2.81-2.5h-8.29a2.72,2.72,0,1,1,0-5.43h8.29a8.1,8.1,0,0,1,8.24,7.93v99.2A8.1,8.1,0,0,1,141.46,162.75Z" />
+                    <path class="cls-23"
+                      d="M131.32,107.94H68.68a2.72,2.72,0,1,1,0-5.43h62.64a2.72,2.72,0,1,1,0,5.43Z" />
+                    <path class="cls-23" d="M131.32,134H68.68a2.72,2.72,0,1,1,0-5.43h62.64a2.72,2.72,0,1,1,0,5.43Z" />
+                    <path class="cls-23" d="M87,81.83H68.68a2.72,2.72,0,1,1,0-5.43H87a2.72,2.72,0,0,1,0,5.43Z" />
+                  </g>
+                </g>
+              </svg>
+              <div>
+                <div class="top-btn-label">テーマ別に制度を見る</div>
+                <div class="top-btn-desc">
+                  <!--<p>すべての支援制度から選択したい、という方はこちらにお進みください。</p>-->
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- 
+          制度一覧ページ
+         -->
+    <div class="list">
+      <h1>テーマ別に制度を見る (<span class="service-count">-</span>件)</h1>
+      <p class="lastUpdatedDate">最終更新日時: <span class="date"></span></p>
+      <div class="card">
+        <ul class="category-list"></ul>
+      </div>
+      <div class="list-page">
+      </div>
+      <div class="template">
+        <div class="theme-group">
+          <h2>
+            <a name=""></a>
+          </h2>
+          <div class="cardset">
+          </div>
+        </div>
+        <div class="service-card card">
+          <h3><a href=""></a></h3>
+          <div>
+            <p class="abstract"></p>
+          </div>
+          <div class="service-provider">
+            <span class="service-tag"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 
+              ナビページ
+             -->
+    <div class="navi">
+      <h1>自分にあった制度を探す</h1>
+      <p class="lastUpdatedDate">最終更新日時: <span class="date"></span></p>
+      <div class="page-summary">
+        あなたにあった支援制度を案内します。<br />すべての設問に、該当するものを選択してください。
+      </div>
+
+      <div id="navi-body" class="navi-body" questionadded="questionAdded()" resultadded="questionAdded()">
+        <div class="pnavi-questions" data-bind="foreach: { data: questions, afterRender: $root.questionAdded}">
+          <div class="pnavi-question card">
+            <h2>
+              <span>Q</span>
+              <span class="pnavi-question-order" data-bind="text: order-1 "></span>
+              <span>.</span>
+              <span class="pnavi-question-text" data-bind="text: questionText"></span>
+            </h2>
+            <ul class="pnavi-answers" data-bind="foreach: answers">
+              <li class="pnavi-answer" data-bind="css: {selected: selected}, event: { click: $root.answerClicked }">
+                <label>
+                  <input type="checkbox" data-bind="checked: selected()" />
+                  <span data-bind="text: answerText"></span>
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pnavi-result-container" data-bind="foreach: {data: result, afterRender: $root.resultAdded}">
+          <div class="pnavi-result card hidden">
+            <h2>
+              <span>ご利用いただける可能性のある支援制度</span>
+              <div>
+                <span class="result-count"></span>
+                <span>個の制度が見つかりました。</span>
+              </div>
+            </h2>
+            <div class="pnavi-result-content" data-bind="html: content"></div>
+          </div>
+          <div class="goto-first-btn">
+            <button class="btn"">最初からやり直す</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 制度個別ページ -->
+    <div class="service">
+      <h1></h1>
+      <div class="service-meta">
+        <p class="lastUpdatedDate">最終更新日時: <span class="date"></span></p>
+        <div class="service-provider"></div>
+      </div>
+      <div class="service-tags"></div>
+      <div class="content-abstract">
+        <h2>■ 概要</h2>
+        <div class="card">
+          <p class="data"></p>
+        </div>
+      </div>
+      <div class="content-provisions">
+        <h2>■ 支援内容</h2>
+        <div class="card">
+          <p class="data"></p>
+        </div>
+      </div>
+      <div class="content-target">
+        <h2>■ 対象者</h2>
+        <div class="card">
+          <p class="data"></p>
+        </div>
+      </div>
+      <div class="content-how_to_apply">
+        <h2>■ 利用・申請方法</h2>
+        <div class="card">
+          <p class="data"></p>
+        </div>
+      </div>
+      <div class="content-contact">
+        <h2>■ お問い合わせ</h2>
+        <div class="card">
+          <p class="data"></p>
+        </div>
+      </div>
+      <div class="content-application_period">
+        <h2>■ 受付期間</h2>
+        <div class="card">
+          <p class="data"></p>
+        </div>
+      </div>
+      <div class="content-url">
+        <h2>■ 手続きなど詳しくは</h2>
+        <div class="card">
+          <p>以下のページをご覧ください</p>
+          <p class="data"></p>
+        </div>
+      </div>
+    </div>
+    <div class="about">
+      <h1>このサイトについて</h1>
+      <p>
+        当サイトは新型コロナウイルス感染症(COVID-19)の影響によってお困りの企業や住民のみなさんが利用できるさまざまな支援制度情報を提供するために、〇〇市が開設したものです。
+      </p>
+      <p>
+        自治体及び国の支援メニューについて、必要な方へ必要な支援が届くよう誰にでもわかりやすいナビゲーションサイトを構築し、住民生活・経済活動の確保を図ることを目的としています。
+      </p>
+
+      <div class="card">
+        <h2>ブラウザ環境について</h2>
+        <p>
+          当サイトは以下の環境でご覧いただくことを推奨いたします。
+        </p>
+        <ul>
+          <li>InternetExplorer11</li>
+          <li>Microsoft Edge 最新版</li>
+          <li>Mozilla Firefox 最新版</li>
+          <li>Google Chrome 最新版（Windows 10以上、Android 8.0以上）</li>
+          <li>Safari 最新版（macOS 10.15以上、iOS 13.3以上)</li>
+        </ul>
+
+        <p>
+          ※推奨環境以外で利用された場合や、推奨環境下でもご利用のブラウザの設定等によっては、正しく表示されない場合がありますのでご了承ください。
+        </p>
+      </div>
+      <div class="card">
+        <h2>JavaScriptについて</h2>
+        <p>
+          当サイトではJavaScriptを使用しております。
+          JavaScriptを無効にして使用された場合、各ページが正常に動作しない、または、表示されない場合がございます。
+          当サイトをご利用の際には、JavaScriptを有効にして頂きますようお願いいたします。
+        </p>
+      </div>
+      <div class="card">
+        <h2>クッキー (Cookie) について</h2>
+        <p>当サイトの一部ではクッキーを使用しています。 クッキーとは、Webコンテンツからの要求で利用者の手元の端末に一時的に保存されるデータのことで、当サイトでは利用状況の把握のためにクッキーを使用する場合があります。 </p>
+        <p>ブラウザに関する情報の収集を希望しない場合は、インターネット閲覧ソフト（ブラウザ）をご自身で設定することにより、クッキーの機能が働かないようにすることも可能です。</p>
+        <p>ただし、クッキーを受け入れない設定をされている場合は、当サイトの機能が正常に動作しない場合がございます。</p>
+      </div>
+      <div class="card">
+        <h2>Google Analyticsの利用について</h2>
+        <p>
+          当サイトでは、サービス向上やサイトの改善のためにGoogle LLCの提供するアクセス分析のツールであるGoogle Analyticsを利用した計測を行っております。
+        </p>
+        <p>
+          Google Analyticsでは、当サイトが発行するクッキー (Cookie)
+          等を利用して、Webサイトの利用データ（アクセス状況、トラフィック、閲覧環境、IPアドレスなど）を収集しております。クッキーの利用に関してはGoogleのプライバシーポリシーと規約に基づいております。
+        </p>
+        <p>
+          取得したデータはWebサイト利用状況を分析しサービスの改善につなげるため、またはサイト運営者へのレポートを作成するため、その他のサービスの提供に関わる目的に限り、これを使用します。（サイト運営者へのレポートでは、クッキーはブラウザ単位で本サイトのユーザー数をカウントするため、IPアドレスはGoogle
+          Analyticsの分析機能を通じてアクセス元の地域分布（国、州・都道府県、都市）を把握するために利用されています。）
+        </p>
+        <p>
+          Google Analyticsの利用規約及びプライバシーポリシーに関する説明については、Google Analyticsのサイトをご覧ください。
+        </p>
+        <ul>
+          <li><a href="https://marketingplatform.google.com/about/analytics/terms/jp/" target="_blank"
+              rel="noopener noreferrer" class="external-link">Google Analytics利用規約</a>
+          </li>
+          <li><a href="https://policies.google.com/privacy?hl=ja" target="_blank" rel="noopener noreferrer"
+              class="external-link">Googleのプライバシーポリシー</a></li>
+          <li><a href="https://support.google.com/analytics/answer/6004245?hl=ja" target="_blank" rel="noopener noreferrer"
+              class="external-link">Google Analyticsに関する詳細情報</a></li>
+        </ul>
+        <p>
+          Google Analyticsによる情報送信を回避する場合は、Googleがサポートする<a href="https://tools.google.com/dlpage/gaoptout?hl=ja"
+            target="_blank" rel="noopener noreferrer" class="external-link">測定を無効にするブラウザアドオン</a>をご利用ください。
+        </p>
+      </div>
+      <div class="card">
+        <h2>当サイトへのリンクについて</h2>
+        <p>当サイトへのリンクは自由です。「新型コロナウイルス感染症　支援情報サイト」のリンクである旨を明記の上、設定を行ってください。
+        </p>
+        <p>
+          ただし、以下のいずれかに該当するか、又はそのおそれがあるリンクの設定はご遠慮ください。
+        </p>
+        <ol>
+          <li>〇〇市、または他社（者）・他団体を誹謗中傷したり、信用失墜を意図する内容を含む場合。 </li>
+          <li>上記の他、法律、条例、規則を含む法令または公序良俗に違反する行為、当サイトの運営を妨害行為するおそれのある場合。</li>
+          <li>〇〇市が保有するロゴやマークなどを無断で用いてリンクを張る場合。</li>
+        </ol>
+        <p>
+          なお、当サイトのURLは予告なく変更する場合がありますので、あらかじめご了承ください。その他リンクに関連した賠償、苦情などに関して、〇〇市および当サイトは何ら責任を負いませんのでご了承ください。
+        </p>
+      </div>
+      <div class="card">
+        <h2>データについて</h2>
+        <p>
+          当サイトで公表しているデータは、〇〇市オープンデータカタログサイトより誰でも自由にダウンロードが可能です。（データは順次追加予定です）
+        </p>
+        <p>支援制度情報データには「ユニバーサルメニュー」を導入し、情報の質や量の統一化を図っています。</p>
+        <p><a href="https://universalmenu.org" target="_blank" rel="noopener noreferrer"><img alt="ユニバーサルメニュー" width="95px"
+              src="/images/um.png"></a></p>
+      </div>
+      <div class="card">
+        <h2>ソースコードについて</h2>
+        <p>
+          当サイトのソースコードはMITライセンスで公開されており、誰でも自由に利用することができます。 詳しくは、当ページの＜ライセンスについて＞をご確認ください。
+        </p>
+      </div>
+      <div class="card">
+        <h2>免責事項</h2>
+        <p>
+          当サイトに掲載されている情報の正確性については万全を期していますが、〇〇市は利用者が当サイトの情報を用いて行う一切の行為について責任を負うものではありません。
+        </p>
+        <p>
+          また、利用者が当サイトを利用したことにより発生した利用者の損害及び利用者が第三者に与えた損害に対して、責任を負うものではありません。
+        </p>
+        <p>
+          当サイトに掲載されている情報は、予告なしに変更又は削除することがあります。
+        </p>
+      </div>
+      <div class="card">
+        <h2>当サイトの運営について</h2>
+        <p>
+          当サイトは〇〇市が運用しています。
+        </p>
+      </div>
+      <div class="card">
+        <h2>ライセンスについて</h2>
+        <ul>
+          <li>MIT License</li>
+          <p>
+            Copyright (c) 2020 Tokyo Metropolitan Government and Asukoe Partners, Inc.
+          </p>
+          <p>
+            Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal with the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: 
+            The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+          </p>
+          <p>
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY.
+          </p>
+          <li>CC License</li>
+          <p>
+            The content of this file is licensed by the Tokyo Metropolitan Government and Asukoe Partners, Inc. in Japan, under the <a href="https://creativecommons.org/licenses/by/4.0/ " target="_blank" rel="noopener noreferrer" class="external-link">Creative Commons Attribution 4.0 International Licence</a>. (CC-BY 4.0)
+          </p>
+        </ul>
+      </div>
+    </div>
+    <div class="privacy">
+      <h1>プライバシーポリシー</h1>
+      <p>本サイトでは、個人情報の収集・利用・管理について<a href="https://example.com/"
+          title="〇〇市個人情報の保護に関する条例のページを別ウィンドウで開きます" target="_blank">「〇〇市個人情報の保護に関する条例(平成XX年XX月XX日 条例第XXX号)」</a>に基づき、
+        次のとおり適切に取り扱うとともに、皆様に安心して利用していただけるサイトづくりに努めていきます。</p>
+      <div class="card">
+        <ol>
+          <li>個人情報とは</li>
+          <p>本サイトを通じて〇〇市が提供を受けた、住所、氏名、電話番号及び電子メールアドレス等特定の個人を識別できる情報をいいます。</p>
+          <li>適用範囲について</li>
+          <p>本方針は、当サイトにおいてのみ適用され、当サイトにリンクされている他のサイトについては適用されません。リンク先における情報の取扱いについては、それぞれの組織の責任において行われることになります。</p>
+          <li>個人情報の収集について</li>
+          <p>
+            本サイトを通じて〇〇市が個人情報を収集する際は、利用者ご本人の意思による情報の提供（登録）を原則とします。個人情報の収集にあたっては、その収集目的を明示いたします。個人情報の収集は、明示した目的を達成するために必要な範囲内でこれを行います。
+          </p>
+          <li>個人情報の利用制限</li>
+          <p>
+            皆様から提供（登録）いただいた個人情報は、あらかじめ明示した収集目的の範囲内で利用いたします。個人情報の収集目的を越えた当該実施機関（※）内における利用及び当該実施機関以外の者への提供は、「〇〇市個人情報の保護に関する条例」で定める場合を除き、一切いたしません。
+            ただし、統計的に処理された利用者属性等の 情報については、個人情報を一切含まないものに限り、公表することがあります。</p>
+          <blockquote>※ 実施機関とは、個人情報を取り扱う都道府県の知事、行政委員会、公営企業管理者及び消防総監並びに〇〇市規則で定める行政機関の長をいいます。</blockquote>
+          <li>個人情報の管理</li>
+          <p>収集しました個人情報は、サイト管理者が厳重に管理し、漏洩、不正流用及び改ざん等の防止に適切な対策を講じます。</p>
+        </ol>
+      </div>
+    </div>
+    <div class="contact">
+      <h1>問い合わせ一覧</h1>
+      <div class="card">
+        <h2>このサイトに関すること（サイトの使い方、サイトに対するご意見等）</h2>
+        <ul>
+            <li>〇〇課（担当課名）</li>
+            <li>メールアドレス　アットマーク　ドメインアドレス</li>
+        </ul>
+        <p>※お問い合わせの際には、タイトルに【支援情報ナビに関する問い合わせ】と記載してください。</p>
+        <p>※各支援の内容については、各担当へお問い合わせください。</p>
+    </div>
+    <div class="card">
+        <h2>各支援制度に関すること（制度の内容や申請方法等）</h2>
+        <ul>
+            <li>各支援制度の担当（制度概要ページに記載）にお問い合わせください。</li>
+        </ul>
+    </div>
+  </div>
+  <script src="./scripts/pnavi.js"></script>
+  <script src="./scripts/main.js"></script>
+</body>
+
+</html>

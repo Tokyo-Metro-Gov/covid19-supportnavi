@@ -1,0 +1,9 @@
+.pnavi-question:first-child .pnavi-answer:first-child::before {
+    background-image: url("../images/icon_business.svg");
+    border-radius: 2px;
+}
+
+.pnavi-question:first-child .pnavi-answer:nth-child(2):before {
+    background-image: url("../images/icon_citizen.svg");
+    border-radius: 2px;
+}

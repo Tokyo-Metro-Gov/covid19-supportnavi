@@ -1,0 +1,9 @@
+node_modules
+dist
+open-covid19-tokyo
+webpack.config.js
+
+## Editor
+
+.vscode
+
