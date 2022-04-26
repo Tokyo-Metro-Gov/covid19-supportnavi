@@ -28,7 +28,7 @@
 Git クライアントを使用する場合は次のコマンドでコピーすることができます。
 
 ```
-git clone https://hogehogehoge
+git clone https://github.com/code4fukui/covid19-supportnavi.git
 ```
 
 つぎに依存モジュールをインストールします。
